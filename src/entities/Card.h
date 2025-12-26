@@ -8,25 +8,23 @@
 
 struct Card {
 
-    public:
+    private:
 
         Suit suit;
         Rank rank;
-        bool selected = false;
+
+    public:
 
         Suit getSuit()                      { return this->suit; }
         Rank getRank()                      { return this->rank; }
-        bool isSelected()                   { return this->selected; }
 
         void setSuit(Suit val)              { this->suit = val; }
         void setRank(Rank val)              { this->rank = val; }
-        void setSelected(bool val)          { this->selected = val; }
 
         void reset() {
         
             this->setSuit(Suit::None);
             this->setRank(Rank::None);
-            this->setSelected(false);
             
         }
 
@@ -56,87 +54,6 @@ struct Card {
             return (3 * ((static_cast<uint8_t>(this->getSuit()) * 13) + (static_cast<uint8_t>(this->getRank()) - 2)));
             
         }
-
-
-        // uint8_t getSortValue(Suit trumps, BidType bidType, uint8_t seq[4]) {
-
-        //     #if defined(DEBUG) && defined(DEBUG_SORT) && defined(DEBUG_SORT_DETAIL)
-        //         DEBUG_PRINT(F("Card "));
-        //         DEBUG_PRINT_CARD(this.getRanks(), this.getSuit);
-        //         DEBUG_PRINT_SPACE();
-        //     #endif
-
-        //     switch (bidType) {
-            
-        //         case BidType::None:
-        //         case BidType::Pass:
-
-        //             // if (suit == Suit::None) {
-
-        //             //     #if defined(DEBUG) && defined(DEBUG_SORT) && defined(DEBUG_SORT_DETAIL)
-        //             //         DEBUG_PRINTLN(Constants::Sort_None);
-        //             //     #endif
-
-        //             //     return Constants::Sort_None;
-                        
-        //             // }                    
-
-        //             if (rank == Rank::None) {
-
-        //                 #if defined(DEBUG) && defined(DEBUG_SORT) && defined(DEBUG_SORT_DETAIL)
-        //                     DEBUG_PRINTLN(Constants::Sort_None);
-        //                 #endif
-
-        //                 return Constants::Sort_None;
-                        
-        //             }      
-
-        //             return (seq[static_cast<uint8_t>(this->suit)] * 20) + (uint8_t)getRank();
-
-        //         default:
-
-        //             // if (suit == Suit::None) {
-
-        //             //     #if defined(DEBUG) && defined(DEBUG_SORT) && defined(DEBUG_SORT_DETAIL)
-        //             //         DEBUG_PRINTLN(Constants::Sort_None);
-        //             //     #endif
-
-        //             //     return Constants::Sort_None;
-                        
-        //             // }                    
-        //             if (rank == Rank::None) {
-
-        //                 #if defined(DEBUG) && defined(DEBUG_SORT) && defined(DEBUG_SORT_DETAIL)
-        //                     DEBUG_PRINTLN(Constants::Sort_None);
-        //                 #endif
-
-        //                 return Constants::Sort_None;
-                        
-        //             }                    
-        //             else if (isLeftBower(trumps)) {
-
-        //                 #if defined(DEBUG) && defined(DEBUG_SORT) && defined(DEBUG_SORT_DETAIL)
-        //                     DEBUG_PRINTLN((seq[static_cast<uint8_t>(getTrump_AltSuit(this->suit))] * 20) + (uint8_t)getRank(trumps));
-        //                 #endif
-
-        //                 return (seq[static_cast<uint8_t>(getTrump_AltSuit(this->suit))] * 20) + (uint8_t)Rank::Left_Bower;
-
-        //             }
-        //             else {
-                      
-        //                 #if defined(DEBUG) && defined(DEBUG_SORT) && defined(DEBUG_SORT_DETAIL)
-        //                     DEBUG_PRINTLN((seq[static_cast<uint8_t>(this->suit)] * 20) + (uint8_t)getRank(trumps));
-        //                 #endif  
-
-        //                 return (seq[static_cast<uint8_t>(this->suit)] * 20) + (uint8_t)getRank();
-
-        //             }
-
-        //             return (seq[static_cast<uint8_t>(this->getSuit())] * 20) + (uint8_t)this->getRank();         
-
-        //     }
-
-        // }
 
 };
 

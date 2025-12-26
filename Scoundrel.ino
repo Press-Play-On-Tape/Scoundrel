@@ -46,17 +46,7 @@ GameState gameState = GameState::Title_Init;
 
 uint8_t titleCounter = 0;
 uint8_t equipMenu = 0;
-// int16_t instructions_Y = 0;
-// // uint8_t jokerIndex = 0;
-// uint8_t selectedCard = 0;
-// uint8_t kittyHighlight = 0;
-// uint8_t endOfGame_Y = 0;
-
-// DealPhysics dealPhysics;
-// BidInput bidInput;
-// uint8_t assistCursor = 0;
-// bool playerAssist;
-// bool screwDealer;
+Puff puff;
 
 void setup() {
 
@@ -119,10 +109,6 @@ void loop() {
 void dealCard() {
 
     Card *card = game.deck.getCard();
-Serial.print("Add Card ");
-DEBUG_PRINT_CARD(card->getSuit(), card->getRank());
-Serial.println("");
-
     game.player.addCard(card);
 
 }

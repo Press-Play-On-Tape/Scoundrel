@@ -33,7 +33,7 @@ void play_Update() {
 
     game.incFrameCount();
 
-    if (game.getHealthCount() == 0) {
+    if (game.getHealthCount() == 0 && puff.counter == 0) {
 
         switch (gameState) {
 
@@ -79,6 +79,13 @@ void play_Update() {
         
                         switch (game.getCursorPosition()) {
                         
+                            case CursorPosition::Run:
+                                if (game.player.getCard(0).getRank() != Rank::None)             { game.setCursorPosition(CursorPosition::Card_00); }
+                                else if (game.player.getCard(1).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_01); }
+                                else if (game.player.getCard(2).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_02); }
+                                else if (game.player.getCard(3).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_03); }
+                                break;
+                        
                             case CursorPosition::Card_00:
                                 if (game.player.getCard(1).getRank() != Rank::None)             { game.setCursorPosition(CursorPosition::Card_01); }
                                 else if (game.player.getCard(2).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_02); }
@@ -114,6 +121,10 @@ void play_Update() {
                         
                             case CursorPosition::Card_01:
                                 if (game.player.getCard(0).getRank() != Rank::None)             { game.setCursorPosition(CursorPosition::Card_00); }
+                                break;
+                        
+                            case CursorPosition::Card_00:
+                                if (!game.getRun() && game.player.getCardCount() == 4)          { game.setCursorPosition(CursorPosition::Run); }
                                 break;
 
                         }
@@ -151,6 +162,12 @@ void play_Update() {
                         
                         switch (game.getCursorPosition()) {
                         
+                            case CursorPosition::Run:
+
+                                puff.counter = 1;
+                                puff.mode = PuffMode::Run;
+                                break;
+
                             case CursorPosition::Card_00:
 
                                 if (game.player.getCard(0).getSuit() == Suit::Diamonds) {
@@ -288,11 +305,9 @@ void play_Update() {
 
                             uint8_t cardIdx = static_cast<uint8_t>(game.getCursorPosition()) - static_cast<uint8_t>(CursorPosition::Card_00);
 
-                            Card card = game.player.getCard(cardIdx);
-                            game.player.setWeapon(card);
-                            game.player.getCard(cardIdx).reset();
-                            game.player.clearDefeated();
-                            game.setCursorPosition(CursorPosition::Weapon);
+                            puff.mode = PuffMode::EquipWeapon;
+                            puff.counter = 1;
+                            puff.idxToRemove = cardIdx;
 
                         }
 
@@ -356,7 +371,6 @@ void play_Update() {
 
                             Card card = game.player.getCard(cardIdx);
                             game.player.getCard(cardIdx).reset();
-                            // game.setCursorPosition(CursorPosition::Weapon);
                             resetCursor();
 
                         }
@@ -488,6 +502,12 @@ void play_Update() {
                     game.setHealthPlayed(true);
                     game.setCursorPosition(CursorPosition::Card_00);
 
+                    if (game.getRunPrevRound()) {
+                        game.setRun(false);
+                    }
+
+                    game.setRunPrevRound(false);
+
                 }
 
                 break;
@@ -512,6 +532,83 @@ void play_Update() {
 
     }
 
+    if (puff.counter > 0 && game.getFrameCount() % 4 == 0) {
+
+        puff.counter++;
+
+        switch (puff.counter) {
+        
+            case 4:
+                
+                switch (puff.mode) {
+
+                    case PuffMode::EquipWeapon:
+                        {
+                            Card card = game.player.getCard(puff.idxToRemove);
+                            game.player.setWeapon(card);
+                            game.player.getCard(puff.idxToRemove).reset();
+                            game.player.clearDefeated();
+                        }
+                        
+                        break;
+
+
+                    case PuffMode::Run:
+                        {
+                            Card card0 = game.player.getCard(0);
+                            game.deck.addCard(card0);
+                            game.player.getCard(0).reset();
+
+                            Card card1 = game.player.getCard(1);
+                            game.deck.addCard(card1);
+                            game.player.getCard(1).reset();
+
+                            Card card2 = game.player.getCard(2);
+                            game.deck.addCard(card2);
+                            game.player.getCard(2).reset();
+
+                            Card card3 = game.player.getCard(3);
+                            game.deck.addCard(card3);
+                            game.player.getCard(3).reset();
+
+                        }
+
+                        break;
+
+                }
+
+                break;
+
+            case 9:
+
+                switch (puff.mode) {
+
+                    case PuffMode::EquipWeapon:
+
+                        game.setCursorPosition(CursorPosition::Weapon);
+                        puff.counter = 0;
+                        break;
+
+                    case PuffMode::Run:
+                        {
+                            gameState = GameState::Play_Deal_00;
+                            game.setFrameCount(0);
+                            game.setCursorPosition(CursorPosition::Card_00);       
+                            puff.counter = 0;
+                            game.setRun(true);
+                            game.setRunPrevRound(true);
+                        }
+
+                        break;
+
+                }
+
+                break;
+
+        }
+
+    }
+
 }
 
 
@@ -530,6 +627,7 @@ void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             switch (gameState) {
             
                 case GameState::Play_Deal_00:
+                    renderPlayerHand(currentPlane, false, false);
                     SpritesU::drawPlusMaskFX(25, 8, Images::Flip, ((game.getFrameCount() / 2) * 3) + currentPlane);
                     break;
             
@@ -556,7 +654,38 @@ void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
             SpritesU::drawOverwriteFX(25, 0, Images::Background, currentPlane);
             renderHUD(currentPlane);
-            renderPlayerHand(currentPlane, true, false);
+            renderPlayerHand(currentPlane, puff.counter == 0, false);
+
+            if (puff.counter > 0) {
+
+                switch (puff.mode) {
+
+                    case PuffMode::EquipWeapon:
+
+                        SpritesU::drawPlusMaskFX(16 + (puff.idxToRemove * 18), 4, Images::Puff_00, ((puff.counter - 1) * 3) + currentPlane);
+                        SpritesU::drawPlusMaskFX(16, 34, Images::Puff_01, ((puff.counter - 1) * 3) + currentPlane);
+
+                        break;
+
+                    case PuffMode::Run:
+
+                        SpritesU::drawPlusMaskFX(16, 4, Images::Puff_00, ((puff.counter - 1) * 3) + currentPlane);
+                        SpritesU::drawPlusMaskFX(16 + 36, 4, Images::Puff_01, ((puff.counter - 1) * 3) + currentPlane);
+                        SpritesU::drawPlusMaskFX(16 + 18, 4, Images::Puff_00, ((puff.counter - 1) * 3) + currentPlane);
+                        SpritesU::drawPlusMaskFX(16 + 18 + 36, 4, Images::Puff_01, ((puff.counter - 1) * 3) + currentPlane);
+
+                        break;
+
+                    case PuffMode::Fight:
+
+                        SpritesU::drawPlusMaskFX(16 + (puff.idxToRemove * 18), 4, Images::Sword, ((puff.counter - 1) * 3) + currentPlane);
+
+                        break;
+
+                }
+
+            }
+
             break;
 
 

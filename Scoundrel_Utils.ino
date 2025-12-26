@@ -66,11 +66,3 @@ void play_CardSelected() {
 
 
 }
-
-void highlightSuitInHand() {
-
-    // selectedCard = 0;
-    // game.players[gameRound.getCurrentPlayer_Idx()].clearSelection();
-    // game.players[gameRound.getCurrentPlayer_Idx()].getCard(selectedCard).setSelected(true);
-
-}

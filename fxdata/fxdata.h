@@ -6,8 +6,8 @@ using uint24_t = __uint24;
 
 // Initialize FX hardware using  FX::begin(FX_DATA_PAGE); in the setup() function.
 
-constexpr uint16_t FX_DATA_PAGE  = 0xfc81;
-constexpr uint24_t FX_DATA_BYTES = 224916;
+constexpr uint16_t FX_DATA_PAGE  = 0xfc4f;
+constexpr uint24_t FX_DATA_BYTES = 237688;
 
 constexpr uint16_t FX_SAVE_PAGE  = 0xfff0;
 constexpr uint24_t FX_SAVE_BYTES = 2;
@@ -49,17 +49,22 @@ namespace Images
   constexpr uint24_t Flip = 0x018810;
   constexpr uint24_t Cards_Bottom = 0x019A12;
   constexpr uint24_t Cards_Bottom_Grey = 0x01DBE4;
-  constexpr uint24_t Title = 0x021DB6;
-  constexpr uint24_t PPOT = 0x02253E;
-  constexpr uint24_t Scoundrel = 0x025540;
-  constexpr uint24_t Fire = 0x026142;
-  constexpr uint24_t HUD = 0x032144;
-  constexpr uint24_t Background = 0x032386;
-  constexpr uint24_t Equip = 0x032A18;
-  constexpr uint24_t BurnCard = 0x0332AE;
-  constexpr uint24_t RestoreHealth = 0x033A24;
-  constexpr uint24_t ChooseFight = 0x034422;
-  constexpr uint24_t Numbers_5x3_2D_MB = 0x035E28;
-  constexpr uint24_t Numbers_5x3_2D_WB = 0x03665E;
+  constexpr uint24_t Hand_Full = 0x021DB6;
+  constexpr uint24_t Hand_Full_Grey = 0x021E51;
+  constexpr uint24_t Title = 0x021EEC;
+  constexpr uint24_t PPOT = 0x022674;
+  constexpr uint24_t Scoundrel = 0x025676;
+  constexpr uint24_t Fire = 0x026278;
+  constexpr uint24_t HUD = 0x03227A;
+  constexpr uint24_t Background = 0x0324BC;
+  constexpr uint24_t Equip = 0x032B4E;
+  constexpr uint24_t BurnCard = 0x0333E4;
+  constexpr uint24_t RestoreHealth = 0x033B5A;
+  constexpr uint24_t ChooseFight = 0x034534;
+  constexpr uint24_t Numbers_5x3_2D_MB = 0x035F3A;
+  constexpr uint24_t Numbers_5x3_2D_WB = 0x036770;
+  constexpr uint24_t Puff_00 = 0x036FA6;
+  constexpr uint24_t Puff_01 = 0x0387A8;
+  constexpr uint24_t Run = 0x039FAA;
 }
 

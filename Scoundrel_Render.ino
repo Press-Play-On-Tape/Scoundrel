@@ -19,14 +19,18 @@ void renderPlayerHand(uint8_t currentPlane, bool highlight, bool greyNonSelected
         }
         else {
 
-            if (card.getRank() != Rank::None && thisCardSelected) {
+            if (card.getRank() != Rank::None) {
 
-                SpritesU::drawPlusMaskFX(24 + (i * 18), 7, Images::Cards_Bottom, card.getCardIndex() + currentPlane);
+                if (thisCardSelected) {
 
-            }
-            else {
+                    SpritesU::drawPlusMaskFX(24 + (i * 18), 7, Images::Cards_Bottom, card.getCardIndex() + currentPlane);
 
-                SpritesU::drawPlusMaskFX(24 + (i * 18), 7, Images::Cards_Bottom_Grey, card.getCardIndex() + currentPlane);
+                }
+                else {
+
+                    SpritesU::drawPlusMaskFX(24 + (i * 18), 7, Images::Cards_Bottom_Grey, card.getCardIndex() + currentPlane);
+                
+                }
             
             }
         
@@ -77,9 +81,22 @@ void renderHUD(uint8_t currentPlane) {
 
     SpritesU::drawOverwriteFX(103, 0, Images::HUD, currentPlane);
 
-    SpritesU::drawOverwriteFX(112, 16, Images::Numbers_5x3_2D_MB, currentPlane);
+    SpritesU::drawOverwriteFX(112, 16, Images::Numbers_5x3_2D_MB, (game.deck.getCardsRemaining() * 3) + currentPlane);
     SpritesU::drawOverwriteFX(112, 35, Images::Numbers_5x3_2D_MB, (game.player.getHealth() * 3) + currentPlane);
     SpritesU::drawOverwriteFX(112, 54, Images::Numbers_5x3_2D_MB, (game.player.getWeaponValue() * 3) + currentPlane);
 
+    if (game.deck.getCardsRemaining() > 0) {
+        SpritesU::drawOverwriteFX(0, 8, Images::Hand_Full, currentPlane);
+    }
+    else {
+        SpritesU::drawOverwriteFX(0, 8, Images::Hand_Full_Grey, currentPlane);
+    }
+
+
+    if (game.getCursorPosition() != CursorPosition::Run || (game.getCursorPosition() == CursorPosition::Run && game.getFrameCount(64))) {
+
+        SpritesU::drawOverwriteFX(1, 53, Images::Run, ((game.getRun() || game.player.getCardCount() < 4) * 3) + currentPlane);
+
+    }
 
 }
