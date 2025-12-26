@@ -32,21 +32,21 @@ decltype(a) a;
 #include <stdlib.h>
 #include "time.h"
 
-// GameRound gameRound;
 Game game;
 
 uint8_t winningBidIdx;
 uint8_t playerCurrentlyBidding;
 
-// SoundSettings &soundSettings = cookie.soundSettings;
 #if not defined(DEBUG) && not defined(DEBUG_BASIC)
 GameState gameState = GameState::SplashScreen_Start;
 #else
 GameState gameState = GameState::Title_Init;
 #endif
+GameState prevGameState = GameState::SplashScreen_Start;
 
 uint8_t titleCounter = 0;
-uint8_t equipMenu = 0;
+uint8_t menuCusror = 0;
+uint8_t restartPressed = 0;
 Puff puff;
 
 void setup() {
@@ -56,17 +56,7 @@ void setup() {
     a.startGray();
     
     FX::begin(FX_DATA_PAGE, FX_SAVE_PAGE);
-    // FX::loadGameState((uint8_t*)&cookie, sizeof(cookie));
-
-    // for (uint8_t i = 0; i < 4; i++) {
-    //     game.players[i].setPlayerNumber(i);
-    //     game.players[i].gameRound = &gameRound;
-    // }
-
-    // game.gameRound = &gameRound;
-
     game.setFrameCount(0);
-    Serial.begin(9600);
     a.initRandomSeed();
 
 }

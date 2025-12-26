@@ -2,10 +2,10 @@
   "schemaVersion": 3,
   "binaries": [
     {
-      "title": "Euchre",
-      "filename": "Euchre_Arduboy.hex",
-      "flashdata": "Euchre_Arduboy-data.bin",
-      "flashsave": "Euchre_Arduboy-save.bin",
+      "title": "Scoundrel",
+      "filename": "Scoundrel.hex",
+      "flashdata": "Scoundrel-data.bin",
+      "flashsave": "Scoundrel-save.bin",
       "device": "ArduboyFX"
     }
   ]

@@ -23,21 +23,21 @@ void chooseFightMenuPosition() {
     if (game.player.getDefeatCard(0).getRank() != Rank::None) {
     
         if (game.player.getDefeatCard(0).getRank() > card.getRank()) {
-            equipMenu = 1;
+            menuCusror = 1;
         }
         else {
-            equipMenu = 0;
+            menuCusror = 0;
         }
         
     }
     else if (game.player.getWeapon().getRank() != Rank::None) {
     
-        equipMenu = 1;
+        menuCusror = 1;
 
     }
     else {
 
-        equipMenu = 0;
+        menuCusror = 0;
 
     }
 

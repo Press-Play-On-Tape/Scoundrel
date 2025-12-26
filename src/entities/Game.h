@@ -10,7 +10,6 @@ struct Game {
 
     private:
 
-        // Card hand[4];
         uint8_t round = 0;
         uint16_t randomSeed = 0;
         uint16_t frameCount = 0;

@@ -49,8 +49,17 @@ void renderPlayerHand(uint8_t currentPlane, bool highlight, bool greyNonSelected
 
             if (i == 0) {
 
-                SpritesU::drawPlusMaskFX(78 - (i * 8), 39, Images::Cards_Bottom, card.getCardIndex() + currentPlane);
+                if (card.getRank() != Rank::None && static_cast<uint8_t>(card.getRank()) != game.player.getWeaponValue()) {
 
+                    SpritesU::drawPlusMaskFX(78 - (i * 8), 39, Images::Cards_Bottom_Grey, card.getCardIndex() + currentPlane);
+
+                }
+                else {
+
+                    SpritesU::drawPlusMaskFX(78 - (i * 8), 39, Images::Cards_Bottom, card.getCardIndex() + currentPlane);
+
+                }
+                
             }
             else {
 
@@ -66,12 +75,21 @@ void renderPlayerHand(uint8_t currentPlane, bool highlight, bool greyNonSelected
 
     // Weapon ..
 
-    Card &card = game.player.getWeapon();
-    bool thisCardSelected = game.getCursorPosition() == CursorPosition::Weapon;
+    Card &weapon = game.player.getWeapon();
+    Card &defeatedCard = game.player.getDefeatCard(0);
 
-    if (card.getRank() != Rank::None && (thisCardSelected && game.getFrameCount(64) || !highlight || !thisCardSelected)) {
+    if (weapon.getRank() != Rank::None) {
 
-        SpritesU::drawPlusMaskFX(24, 39, Images::Cards_Bottom, card.getCardIndex() + currentPlane);
+        if (defeatedCard.getRank() != Rank::None && static_cast<uint8_t>(defeatedCard.getRank()) == game.player.getWeaponValue()) {
+
+            SpritesU::drawPlusMaskFX(24, 39, Images::Cards_Bottom_Grey, weapon.getCardIndex() + currentPlane);
+
+        }
+        else {
+
+            SpritesU::drawPlusMaskFX(24, 39, Images::Cards_Bottom, weapon.getCardIndex() + currentPlane);
+
+        }
 
     }
 
@@ -95,7 +113,7 @@ void renderHUD(uint8_t currentPlane) {
 
     if (game.getCursorPosition() != CursorPosition::Run || (game.getCursorPosition() == CursorPosition::Run && game.getFrameCount(64))) {
 
-        SpritesU::drawOverwriteFX(1, 53, Images::Run, ((game.getRun() || game.player.getCardCount() < 4) * 3) + currentPlane);
+        SpritesU::drawOverwriteFX(1, 53, Images::Run, ((game.getRun() || game.player.getCardCount() < 4 || game.deck.getCardsRemaining() == 0) * 3) + currentPlane);
 
     }
 

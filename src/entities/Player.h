@@ -11,7 +11,6 @@ struct Player {
 
     private:
     
-        // uint8_t cardCount;
         uint8_t health;
         uint8_t defeatCardIdx;
 
@@ -21,13 +20,11 @@ struct Player {
 
     public:
 
-        // uint8_t getCardCount()                          { return this->cardCount; }
         uint8_t getHealth()                             { return this->health; }
         Card &getCard(uint8_t idx)                      { return this->cards[idx]; }
         Card &getDefeatCard(uint8_t idx)                { return this->defeatCards[idx]; }
         Card &getWeapon()                               { return this->weapon; }
 
-        // void setCardCount(uint8_t val)                  { this->cardCount = val; }
         void setHealth(uint8_t val)                     { this->health = val; }
         void setCard(uint8_t idx, Card &card)           { this->cards[idx] = card; }
         void setWeapon(Card &card)                      { this->weapon = card; }
@@ -80,8 +77,9 @@ struct Player {
 
         void reset() {
 
-            this->health = 20; //SJH
+            this->health = 20;
             this->defeatCardIdx = 0; 
+            this->weapon.reset(); 
 
             for (uint8_t i = 0; i < 4; i++) {
             
@@ -94,16 +92,6 @@ struct Player {
                 this->defeatCards[i].reset();
 
             }
-
-            // this->weapon.reset();
-            // Card a;
-            // a.setRank(Rank::Two);
-            // a.setSuit(Suit::Clubs);
-            // this->addDefeatCard(a);
-            // Card b;
-            // b.setRank(Rank::Three);
-            // b.setSuit(Suit::Clubs);
-            // this->addDefeatCard(b);
 
         }
 

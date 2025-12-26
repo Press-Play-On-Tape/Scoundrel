@@ -8,7 +8,6 @@ enum class CursorPosition : uint8_t {
     Card_01, 
     Card_02, 
     Card_03, 
-    Weapon, 
 };
 
 inline CursorPosition &operator++(CursorPosition &c) {
@@ -131,6 +130,9 @@ enum class GameState : uint8_t {
         RestoreHealth,
         BurnCard,
         ChooseFight,
+        YouWin,
+        YouLose,
+        RestartGame,
     Play_End,
     
 };
@@ -166,6 +168,8 @@ enum Direction : uint8_t {
 enum PuffMode : uint8_t { 
     EquipWeapon,
     Run,
+    Heart,
+    Burn,
     Fight_BareHand,
     Fight_Weapon,
 };

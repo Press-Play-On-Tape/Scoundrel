@@ -3,9 +3,11 @@ struct Deck {
     private:
 
         Card deck[44];
-        uint8_t deckSize = 0;
+        int8_t deckSize = 0;
 
     public:
+
+        void setDeckSize(uint8_t val)           { this->deckSize = val; }
 
         uint8_t getCardsRemaining() {
             return this->deckSize;
@@ -45,7 +47,6 @@ struct Deck {
 
         }
 
-        // Deal a card (card is removed from the deck)
         Card *getCard() {
 
             if (this->deckSize == 0) return nullptr;
@@ -55,23 +56,20 @@ struct Deck {
 
         }
 
-        // Add card to the end of the deck
         void addCard(Card &card) {
 
             if (this->deckSize >= 44) return;
 
-            // Shift cards up to make room at index 0
             for (int8_t i = this->deckSize; i > 0; i--) {
 
                 this->deck[i] = this->deck[i - 1];
 
             }
 
-            // Insert at bottom
             this->deck[0].setRank(card.getRank());
             this->deck[0].setSuit(card.getSuit());
-
             this->deckSize++;
+
         }
 
 };
