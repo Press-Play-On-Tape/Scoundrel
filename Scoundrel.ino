@@ -13,6 +13,7 @@
 #include "src/entities/Deck.h"
 #include "src/entities/Player.h"
 #include "src/entities/Game.h"
+#include "src/entities/Puff.h"
 #include "fxdata/fxdata.h"
 #include "fxdata/images/Images.h"
 #include "src/utils/Random.h"

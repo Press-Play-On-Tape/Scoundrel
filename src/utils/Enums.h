@@ -166,17 +166,6 @@ enum Direction : uint8_t {
 enum PuffMode : uint8_t { 
     EquipWeapon,
     Run,
-};
-
-
-struct Puff {
-
-    PuffMode mode;
-    // uint8_t x;
-    // uint8_t y;
-    uint8_t counter;
-    uint8_t idxToRemove;
-    // Suit weaponSuit;
-    // Rank weaponRank;
-    
+    Fight_BareHand,
+    Fight_Weapon,
 };

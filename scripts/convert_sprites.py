@@ -132,3 +132,5 @@ convert_header(IMAGES + 'Puff_00.png',                                          
 convert_header(IMAGES + 'Puff_01.png',                                                         BASE + 'Images.hpp', 'Puff_01', 4, 32, 32)
 convert_header(IMAGES + 'Run.png',                                                             BASE + 'Images.hpp', 'Run', 4, 17, 16)
 convert_header(IMAGES + 'Sword.png',                                                           BASE + 'Images.hpp', 'Sword', 4, 32, 32)
+convert_header(IMAGES + 'YouLose.png',                                                         BASE + 'Images.hpp', 'YouLose', 4, 32, 32)
+convert_header(IMAGES + 'YouWin.png',                                                          BASE + 'Images.hpp', 'YouWin', 4, 32, 32)
