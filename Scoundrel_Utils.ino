@@ -8,21 +8,21 @@
 
 void resetCursor() {
 
-    if (game.player.getCard(0).getRank() != Rank::None)         game.setCursorPosition(CursorPosition::Card_00);
-    else if (game.player.getCard(1).getRank() != Rank::None)    game.setCursorPosition(CursorPosition::Card_01);
-    else if (game.player.getCard(2).getRank() != Rank::None)    game.setCursorPosition(CursorPosition::Card_02);
-    else if (game.player.getCard(3).getRank() != Rank::None)    game.setCursorPosition(CursorPosition::Card_03);
+    if (game.getPlayer().getCard(0).getRank() != Rank::None)         game.setCursorPosition(CursorPosition::Card_00);
+    else if (game.getPlayer().getCard(1).getRank() != Rank::None)    game.setCursorPosition(CursorPosition::Card_01);
+    else if (game.getPlayer().getCard(2).getRank() != Rank::None)    game.setCursorPosition(CursorPosition::Card_02);
+    else if (game.getPlayer().getCard(3).getRank() != Rank::None)    game.setCursorPosition(CursorPosition::Card_03);
 
 }
 
 void chooseFightMenuPosition() {
 
     uint8_t cardIdx = static_cast<uint8_t>(game.getCursorPosition()) - static_cast<uint8_t>(CursorPosition::Card_00);
-    Card card = game.player.getCard(cardIdx);
+    Card card = game.getPlayer().getCard(cardIdx);
     
-    if (game.player.getDefeatCard(0).getRank() != Rank::None) {
+    if (game.getPlayer().getDefeatCard(0).getRank() != Rank::None) {
     
-        if (game.player.getDefeatCard(0).getRank() > card.getRank()) {
+        if (game.getPlayer().getDefeatCard(0).getRank() > card.getRank()) {
             menuCusror = 1;
         }
         else {
@@ -30,7 +30,7 @@ void chooseFightMenuPosition() {
         }
         
     }
-    else if (game.player.getWeapon().getRank() != Rank::None) {
+    else if (game.getPlayer().getWeapon().getRank() != Rank::None) {
     
         menuCusror = 1;
 

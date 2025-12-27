@@ -99,8 +99,8 @@ void loop() {
 
 void dealCard() {
 
-    Card *card = game.deck.getCard();
-    game.player.addCard(card);
+    Card *card = game.getDeck().getCard();
+    game.getPlayer().addCard(card);
 
 }
 
@@ -116,9 +116,9 @@ void DEBUG_PRINT_HAND(uint8_t player) {
                 DEBUG_PRINT(player);
                 DEBUG_PRINT_SPACE();
 
-                for (uint8_t i = 0; i < game.players[player].getCardCount(); i++) {
-                    if (game.players[player].getCard(i).getRank() != Rank::Ten) DEBUG_PRINT_SPACE();
-                    DEBUG_PRINT_CARD(game.players[player].getCard(i).getSuit(), game.players[player].getCard(i).getRank());
+                for (uint8_t i = 0; i < game.getPlayer()s[player].getCardCount(); i++) {
+                    if (game.getPlayer()s[player].getCard(i).getRank() != Rank::Ten) DEBUG_PRINT_SPACE();
+                    DEBUG_PRINT_CARD(game.getPlayer()s[player].getCard(i).getSuit(), game.getPlayer()s[player].getCard(i).getRank());
                     DEBUG_PRINT_SPACE();
                 }
 
@@ -150,7 +150,7 @@ void DEBUG_PRINT_HANDS() {
             
             uint8_t playerIdx = i % 4;
 
-            if (game.players[playerIdx].isPlaying()) {
+            if (game.getPlayer()s[playerIdx].isPlaying()) {
 
                 if (gameRound.getWinningBid_Idx() == playerIdx) {
                     DEBUG_PRINT(F("*"));

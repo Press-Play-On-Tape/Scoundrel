@@ -16,7 +16,7 @@ void play_Init() {
     game.setRandomSeed(r);
     // #endif
 
-    game.player.reset();
+    game.getPlayer().reset();
 
 }
 
@@ -60,15 +60,15 @@ void play_Update() {
 
             case GameState::Play_Shuffle:  
 
-                game.deck.createDeck();
-                game.deck.shuffleDeck();
+                game.getDeck().createDeck();
+                game.getDeck().shuffleDeck();
                 game.setFrameCount(0);
                 gameState = GameState::Play_Deal_00;
 
                 game.resetRound();
                 game.setRound(0);
 
-                // game.deck.setDeckSize(5);
+                // game.getDeck().setDeckSize(5);
 
                 break;
 
@@ -80,7 +80,7 @@ void play_Update() {
                     game.setFrameCount(0);
                     dealCard();
 
-                    if (game.deck.getCardsRemaining() == 0) {
+                    if (game.getDeck().getCardsRemaining() == 0) {
 
 
                         gameState = GameState::Play;
@@ -100,25 +100,25 @@ void play_Update() {
                         switch (game.getCursorPosition()) {
                         
                             case CursorPosition::Run:
-                                if (game.player.getCard(0).getRank() != Rank::None)             { game.setCursorPosition(CursorPosition::Card_00); }
-                                else if (game.player.getCard(1).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_01); }
-                                else if (game.player.getCard(2).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_02); }
-                                else if (game.player.getCard(3).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_03); }
+                                if (game.getPlayer().getCard(0).getRank() != Rank::None)             { game.setCursorPosition(CursorPosition::Card_00); }
+                                else if (game.getPlayer().getCard(1).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_01); }
+                                else if (game.getPlayer().getCard(2).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_02); }
+                                else if (game.getPlayer().getCard(3).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_03); }
                                 break;
                         
                             case CursorPosition::Card_00:
-                                if (game.player.getCard(1).getRank() != Rank::None)             { game.setCursorPosition(CursorPosition::Card_01); }
-                                else if (game.player.getCard(2).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_02); }
-                                else if (game.player.getCard(3).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_03); }
+                                if (game.getPlayer().getCard(1).getRank() != Rank::None)             { game.setCursorPosition(CursorPosition::Card_01); }
+                                else if (game.getPlayer().getCard(2).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_02); }
+                                else if (game.getPlayer().getCard(3).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_03); }
                                 break;
                         
                             case CursorPosition::Card_01:
-                                if (game.player.getCard(2).getRank() != Rank::None)             { game.setCursorPosition(CursorPosition::Card_02); }
-                                else if (game.player.getCard(3).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_03); }
+                                if (game.getPlayer().getCard(2).getRank() != Rank::None)             { game.setCursorPosition(CursorPosition::Card_02); }
+                                else if (game.getPlayer().getCard(3).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_03); }
                                 break;
                         
                             case CursorPosition::Card_02:
-                                if (game.player.getCard(3).getRank() != Rank::None)             { game.setCursorPosition(CursorPosition::Card_03); }
+                                if (game.getPlayer().getCard(3).getRank() != Rank::None)             { game.setCursorPosition(CursorPosition::Card_03); }
                                 break;
 
                         }
@@ -129,22 +129,22 @@ void play_Update() {
                         switch (game.getCursorPosition()) {
                         
                             case CursorPosition::Card_03:
-                                if (game.player.getCard(2).getRank() != Rank::None)             { game.setCursorPosition(CursorPosition::Card_02); }
-                                else if (game.player.getCard(1).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_01); }
-                                else if (game.player.getCard(0).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_00); }
+                                if (game.getPlayer().getCard(2).getRank() != Rank::None)             { game.setCursorPosition(CursorPosition::Card_02); }
+                                else if (game.getPlayer().getCard(1).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_01); }
+                                else if (game.getPlayer().getCard(0).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_00); }
                                 break;
                         
                             case CursorPosition::Card_02:
-                                if (game.player.getCard(1).getRank() != Rank::None)             { game.setCursorPosition(CursorPosition::Card_01); }
-                                else if (game.player.getCard(0).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_00); }
+                                if (game.getPlayer().getCard(1).getRank() != Rank::None)             { game.setCursorPosition(CursorPosition::Card_01); }
+                                else if (game.getPlayer().getCard(0).getRank() != Rank::None)        { game.setCursorPosition(CursorPosition::Card_00); }
                                 break;
                         
                             case CursorPosition::Card_01:
-                                if (game.player.getCard(0).getRank() != Rank::None)             { game.setCursorPosition(CursorPosition::Card_00); }
+                                if (game.getPlayer().getCard(0).getRank() != Rank::None)             { game.setCursorPosition(CursorPosition::Card_00); }
                                 break;
                         
                             case CursorPosition::Card_00:
-                                if (!game.getRun() && game.player.getCardCount() == 4 && game.deck.getCardsRemaining() > 0) { 
+                                if (!game.getRun() && game.getPlayer().getCardCount() == 4 && game.getDeck().getCardsRemaining() > 0) { 
                                     game.setCursorPosition(CursorPosition::Run); 
                                 }
                                 break;
@@ -155,7 +155,7 @@ void play_Update() {
                     else if (justPressed & A_BUTTON) {
 
                         uint8_t cardIdx = static_cast<uint8_t>(game.getCursorPosition()) - static_cast<uint8_t>(CursorPosition::Card_00);
-                        Card card = game.player.getCard(cardIdx);
+                        Card card = game.getPlayer().getCard(cardIdx);
                         
                         switch (game.getCursorPosition()) {
                         
@@ -167,17 +167,17 @@ void play_Update() {
 
                             case CursorPosition::Card_00:
 
-                                if (game.player.getCard(0).getSuit() == Suit::Diamonds) {
+                                if (game.getPlayer().getCard(0).getSuit() == Suit::Diamonds) {
 
                                     menuCusror = 0;
                                     gameState = GameState::Equip;
 
                                 }
-                                else if (game.player.getCard(0).getSuit() == Suit::Hearts) {
+                                else if (game.getPlayer().getCard(0).getSuit() == Suit::Hearts) {
 
                                     menuCusror = 0;
 
-                                    if (game.player.getHealth() < 20 && !game.getHealthPlayed()) {
+                                    if (game.getPlayer().getHealth() < 20 && !game.getHealthPlayed()) {
                                         gameState = GameState::RestoreHealth;
                                     }
                                     else {
@@ -195,17 +195,17 @@ void play_Update() {
                         
                             case CursorPosition::Card_01:
 
-                                if (game.player.getCard(1).getSuit() == Suit::Diamonds) {
+                                if (game.getPlayer().getCard(1).getSuit() == Suit::Diamonds) {
 
                                     menuCusror = 0;
                                     gameState = GameState::Equip;
 
                                 }
-                                else if (game.player.getCard(1).getSuit() == Suit::Hearts) {
+                                else if (game.getPlayer().getCard(1).getSuit() == Suit::Hearts) {
 
                                     menuCusror = 0;
 
-                                    if (game.player.getHealth() < 20 && !game.getHealthPlayed()) {
+                                    if (game.getPlayer().getHealth() < 20 && !game.getHealthPlayed()) {
                                         gameState = GameState::RestoreHealth;
                                     }
                                     else {
@@ -223,17 +223,17 @@ void play_Update() {
                         
                             case CursorPosition::Card_02:
 
-                                if (game.player.getCard(2).getSuit() == Suit::Diamonds) {
+                                if (game.getPlayer().getCard(2).getSuit() == Suit::Diamonds) {
 
                                     menuCusror = 0;
                                     gameState = GameState::Equip;
 
                                 }
-                                else if (game.player.getCard(2).getSuit() == Suit::Hearts) {
+                                else if (game.getPlayer().getCard(2).getSuit() == Suit::Hearts) {
 
                                     menuCusror = 0;
 
-                                    if (game.player.getHealth() < 20 && !game.getHealthPlayed()) {
+                                    if (game.getPlayer().getHealth() < 20 && !game.getHealthPlayed()) {
                                         gameState = GameState::RestoreHealth;
                                     }
                                     else {
@@ -251,17 +251,17 @@ void play_Update() {
                         
                             case CursorPosition::Card_03:
 
-                                if (game.player.getCard(3).getSuit() == Suit::Diamonds) {
+                                if (game.getPlayer().getCard(3).getSuit() == Suit::Diamonds) {
 
                                     menuCusror = 0;
                                     gameState = GameState::Equip;
 
                                 }
-                                else if (game.player.getCard(3).getSuit() == Suit::Hearts) {
+                                else if (game.getPlayer().getCard(3).getSuit() == Suit::Hearts) {
 
                                     menuCusror = 0;
 
-                                    if (game.player.getHealth() < 20 && !game.getHealthPlayed()) {
+                                    if (game.getPlayer().getHealth() < 20 && !game.getHealthPlayed()) {
                                         gameState = GameState::RestoreHealth;
                                     }
                                     else {
@@ -332,7 +332,7 @@ void play_Update() {
 
                             uint8_t cardIdx = static_cast<uint8_t>(game.getCursorPosition()) - static_cast<uint8_t>(CursorPosition::Card_00);
 
-                            Card card = game.player.getCard(cardIdx);
+                            Card card = game.getPlayer().getCard(cardIdx);
                             puff.init(PuffMode::Heart, cardIdx);
 
                         }
@@ -360,7 +360,7 @@ void play_Update() {
 
                             uint8_t cardIdx = static_cast<uint8_t>(game.getCursorPosition()) - static_cast<uint8_t>(CursorPosition::Card_00);
 
-                            Card card = game.player.getCard(cardIdx);
+                            Card card = game.getPlayer().getCard(cardIdx);
                             puff.init(PuffMode::Burn, cardIdx);
 
                         }
@@ -380,17 +380,17 @@ void play_Update() {
             case GameState::ChooseFight:
                 {
                     uint8_t cardIdx = static_cast<uint8_t>(game.getCursorPosition()) - static_cast<uint8_t>(CursorPosition::Card_00);
-                    Card card = game.player.getCard(cardIdx);
+                    Card card = game.getPlayer().getCard(cardIdx);
 
                     if (justPressed & DOWN_BUTTON) {
     
                         switch (menuCusror) {
                         
                             case 0:
-                                if (game.player.getWeapon().getRank() == Rank::None) {
+                                if (game.getPlayer().getWeapon().getRank() == Rank::None) {
                                     menuCusror = 2;
                                 }
-                                else if (game.player.getDefeatCard(0).getRank() != Rank::None && game.player.getDefeatCard(0).getRank() <= card.getRank()) {
+                                else if (game.getPlayer().getDefeatCard(0).getRank() != Rank::None && game.getPlayer().getDefeatCard(0).getRank() <= card.getRank()) {
                                     menuCusror = 2;
                                 }
                                 else {
@@ -415,10 +415,10 @@ void play_Update() {
                                 break;
                         
                             case 2:
-                                if (game.player.getWeapon().getRank() == Rank::None) {
+                                if (game.getPlayer().getWeapon().getRank() == Rank::None) {
                                     menuCusror = 0;
                                 }
-                                else if (game.player.getDefeatCard(0).getRank() != Rank::None && game.player.getDefeatCard(0).getRank() <= card.getRank()) {
+                                else if (game.getPlayer().getDefeatCard(0).getRank() != Rank::None && game.getPlayer().getDefeatCard(0).getRank() <= card.getRank()) {
                                     menuCusror = 0;
 
                                 }
@@ -439,7 +439,7 @@ void play_Update() {
                             case 0:
                                 {                        
                                     uint8_t cardIdx = static_cast<uint8_t>(game.getCursorPosition()) - static_cast<uint8_t>(CursorPosition::Card_00);
-                                    Card card = game.player.getCard(cardIdx);
+                                    Card card = game.getPlayer().getCard(cardIdx);
 
                                     puff.init(PuffMode::Fight_BareHand, cardIdx);
                                     game.setFrameCount(1);
@@ -450,7 +450,7 @@ void play_Update() {
                             case 1:
                                 {                        
                                     uint8_t cardIdx = static_cast<uint8_t>(game.getCursorPosition()) - static_cast<uint8_t>(CursorPosition::Card_00);
-                                    Card card = game.player.getCard(cardIdx);
+                                    Card card = game.getPlayer().getCard(cardIdx);
 
                                     puff.init(PuffMode::Fight_Weapon, cardIdx);
                                     game.setFrameCount(1);
@@ -536,11 +536,11 @@ void play_Update() {
 
             case GameState::Play:     
                     
-                if (game.deck.getCardsRemaining() > 0) {
+                if (game.getDeck().getCardsRemaining() > 0) {
 
-                    if (game.player.getCardCount() == 1) {
+                    if (game.getPlayer().getCardCount() == 1) {
 
-                        game.player.moveCards();
+                        game.getPlayer().moveCards();
                         gameState = GameState::Play_Deal_01;
                         game.setFrameCount(0);
                         game.setHealthPlayed(false);
@@ -557,7 +557,7 @@ void play_Update() {
                 }
                 else {
 
-                    if (game.player.getCardCount() == 0) {
+                    if (game.getPlayer().getCardCount() == 0) {
 
                         gameState = GameState::YouWin;
                         game.setFrameCount(0);
@@ -581,10 +581,10 @@ void play_Update() {
         
             case 1 ... 100:
 
-                game.player.incHealth(1);
+                game.getPlayer().incHealth(1);
                 game.decHealthCount();
 
-                if (game.player.getHealth() == 0) {
+                if (game.getPlayer().getHealth() == 0) {
 
                     game.setFrameCount(0);
                     gameState = GameState::YouLose;
@@ -594,10 +594,10 @@ void play_Update() {
 
             case -100 ... -1:
 
-                game.player.decHealth(1);
+                game.getPlayer().decHealth(1);
                 game.incHealthCount();
 
-                if (game.player.getHealth() == 0) {
+                if (game.getPlayer().getHealth() == 0) {
 
                     game.setFrameCount(0);
                     gameState = GameState::YouLose;
@@ -622,35 +622,35 @@ void play_Update() {
 
                     case PuffMode::EquipWeapon:
                         {
-                            Card card = game.player.getCard(puff.getIndex());
-                            game.player.setWeapon(card);
-                            game.player.setPrevCard(game.player.getCard(puff.getIndex()));
-                            game.player.getCard(puff.getIndex()).reset();
-                            game.player.clearDefeated();
+                            Card card = game.getPlayer().getCard(puff.getIndex());
+                            game.getPlayer().setWeapon(card);
+                            game.getPlayer().setPrevCard(game.getPlayer().getCard(puff.getIndex()));
+                            game.getPlayer().getCard(puff.getIndex()).reset();
+                            game.getPlayer().clearDefeated();
                         }
                         
                         break;
 
                     case PuffMode::Run:
                         {
-                            Card card0 = game.player.getCard(0);
-                            game.deck.addCard(card0);
-                            game.player.getCard(0).reset();
+                            Card card0 = game.getPlayer().getCard(0);
+                            game.getDeck().addCard(card0);
+                            game.getPlayer().getCard(0).reset();
 
-                            Card card1 = game.player.getCard(1);
-                            game.deck.addCard(card1);
-                            game.player.getCard(1).reset();
+                            Card card1 = game.getPlayer().getCard(1);
+                            game.getDeck().addCard(card1);
+                            game.getPlayer().getCard(1).reset();
 
-                            Card card2 = game.player.getCard(2);
-                            game.deck.addCard(card2);
-                            game.player.getCard(2).reset();
+                            Card card2 = game.getPlayer().getCard(2);
+                            game.getDeck().addCard(card2);
+                            game.getPlayer().getCard(2).reset();
 
-                            Card card3 = game.player.getCard(3);
-                            game.deck.addCard(card3);
-                            game.player.getCard(3).reset();
+                            Card card3 = game.getPlayer().getCard(3);
+                            game.getDeck().addCard(card3);
+                            game.getPlayer().getCard(3).reset();
 
                             Card prevCard;
-                            game.player.setPrevCard(prevCard);
+                            game.getPlayer().setPrevCard(prevCard);
 
                         }
 
@@ -658,11 +658,11 @@ void play_Update() {
 
                     case PuffMode::Heart:
                         {
-                            Card card = game.player.getCard(puff.getIndex());
+                            Card card = game.getPlayer().getCard(puff.getIndex());
                             game.setHealthPlayed(true);
                             game.setHealthCount(static_cast<uint8_t>(card.getRank()));                            
-                            game.player.setPrevCard(game.player.getCard(puff.getIndex()));
-                            game.player.getCard(puff.getIndex()).reset();
+                            game.getPlayer().setPrevCard(game.getPlayer().getCard(puff.getIndex()));
+                            game.getPlayer().getCard(puff.getIndex()).reset();
 
                         }
 
@@ -670,9 +670,9 @@ void play_Update() {
                         
                     case PuffMode::Burn:
                         {
-                            Card card = game.player.getCard(puff.getIndex());
-                            game.player.setPrevCard(game.player.getCard(puff.getIndex()));
-                            game.player.getCard(puff.getIndex()).reset();
+                            Card card = game.getPlayer().getCard(puff.getIndex());
+                            game.getPlayer().setPrevCard(game.getPlayer().getCard(puff.getIndex()));
+                            game.getPlayer().getCard(puff.getIndex()).reset();
                         }
                         
                         break;
@@ -723,13 +723,13 @@ void play_Update() {
 
                     case PuffMode::Fight_BareHand:
                         {
-                            Card card = game.player.getCard(puff.getIndex());
+                            Card card = game.getPlayer().getCard(puff.getIndex());
 
                             game.setHealthCount(-static_cast<uint8_t>(card.getRank()));
 
-                            if (game.player.getHealth() > static_cast<uint8_t>(card.getRank())) {
-                                game.player.setPrevCard(game.player.getCard(puff.getIndex()));
-                                game.player.getCard(puff.getIndex()).reset();
+                            if (game.getPlayer().getHealth() > static_cast<uint8_t>(card.getRank())) {
+                                game.getPlayer().setPrevCard(game.getPlayer().getCard(puff.getIndex()));
+                                game.getPlayer().getCard(puff.getIndex()).reset();
                             }
                             gameState = GameState::Play;
 
@@ -743,23 +743,23 @@ void play_Update() {
                     case PuffMode::Fight_Weapon:
                         {
                             
-                            Card card = game.player.getCard(puff.getIndex());
+                            Card card = game.getPlayer().getCard(puff.getIndex());
 
-                            if (static_cast<uint8_t>(card.getRank()) > game.player.getWeaponValue()) {
-                                game.setHealthCount(-static_cast<uint8_t>(card.getRank()) + game.player.getWeaponValue());
+                            if (static_cast<uint8_t>(card.getRank()) > game.getPlayer().getWeaponValue()) {
+                                game.setHealthCount(-static_cast<uint8_t>(card.getRank()) + game.getPlayer().getWeaponValue());
                             }
 
-                            if (game.player.getHealth() > static_cast<uint8_t>(card.getRank())) {
-                                game.player.setPrevCard(game.player.getCard(puff.getIndex()));
-                                game.player.getCard(puff.getIndex()).reset();
-                                game.player.addDefeatCard(card);
+                            if (game.getPlayer().getHealth() > static_cast<uint8_t>(card.getRank())) {
+                                game.getPlayer().setPrevCard(game.getPlayer().getCard(puff.getIndex()));
+                                game.getPlayer().getCard(puff.getIndex()).reset();
+                                game.getPlayer().addDefeatCard(card);
                             }
 
                             gameState = GameState::Play;
                             resetCursor();
                             puff.setCounter(0);
 
-                            if (game.player.getHealth() == 0) {
+                            if (game.getPlayer().getHealth() == 0) {
 
                                 game.setFrameCount(0);
                                 gameState = GameState::YouLose;
@@ -930,7 +930,7 @@ void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             {
 
                 uint8_t cardIdx = static_cast<uint8_t>(game.getCursorPosition()) - static_cast<uint8_t>(CursorPosition::Card_00);
-                Card card = game.player.getCard(cardIdx);
+                Card card = game.getPlayer().getCard(cardIdx);
  
                 SpritesU::drawOverwriteFX(25, 0, Images::Background, currentPlane);
                 renderHUD(currentPlane);
@@ -1013,30 +1013,30 @@ void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                 
                 for (uint8_t i = 0; i < 4; i++) {
 
-                    if (game.player.getCard(i).getSuit() == Suit::Spades || game.player.getCard(i).getSuit() == Suit::Clubs) {
+                    if (game.getPlayer().getCard(i).getSuit() == Suit::Spades || game.getPlayer().getCard(i).getSuit() == Suit::Clubs) {
                         count++;
-                        score = score - static_cast<uint8_t>(game.player.getCard(i).getRank());
+                        score = score - static_cast<uint8_t>(game.getPlayer().getCard(i).getRank());
                     }
 
                 }            
 
-                for (uint8_t i = 0; i < game.deck.getCardsRemaining(); i++) {
+                for (uint8_t i = 0; i < game.getDeck().getCardsRemaining(); i++) {
 
-                    if (game.deck.getCard(i)->getSuit() == Suit::Spades || game.deck.getCard(i)->getSuit() == Suit::Clubs) {
+                    if (game.getDeck().getCard(i)->getSuit() == Suit::Spades || game.getDeck().getCard(i)->getSuit() == Suit::Clubs) {
                         count++;
-                        score = score - static_cast<uint8_t>(game.deck.getCard(i)->getRank());
+                        score = score - static_cast<uint8_t>(game.getDeck().getCard(i)->getRank());
                     }
 
                 }         
 
                 if (score == 0) {
                 
-                    score = game.player.getHealth();
+                    score = game.getPlayer().getHealth();
 
                     if (score == 20) {
 
-                        if (game.player.getPrevCard().getSuit() == Suit::Hearts) {
-                            score = score + static_cast<uint8_t>(game.player.getPrevCard().getRank());
+                        if (game.getPlayer().getPrevCard().getSuit() == Suit::Hearts) {
+                            score = score + static_cast<uint8_t>(game.getPlayer().getPrevCard().getRank());
                         }
 
                     }

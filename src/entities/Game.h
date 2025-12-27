@@ -21,10 +21,10 @@ struct Game {
         CursorPosition cursorPosition = CursorPosition::Card_00;
         int8_t healthCount = 0;
 
-    public:
-
         Player player;
         Deck deck;
+
+    public:
 
         uint16_t getFrameCount()                        { return this->frameCount; }
         uint16_t getFrameCount(uint8_t val)             { return this->frameCount % val < val / 2; }
@@ -34,16 +34,21 @@ struct Game {
         bool getRun()                                   { return this->run; }
         bool getRunPrevRound()                          { return this->runPrevRound; }
 
+        Player &getPlayer()                             { return this->player; }
+        Deck &getDeck()                                 { return this->deck; }
         CursorPosition getCursorPosition()              { return this->cursorPosition; }
 
         void setRandomSeed(uint16_t val)                { this->randomSeed = val; }
         void setFrameCount(uint16_t val)                { this->frameCount = val; }
-        void setCursorPosition(CursorPosition val)      { this->cursorPosition = val; }
         void setRound(uint8_t val)                      { this->round = val; }
         void setHealthCount(int8_t val)                 { this->healthCount = val; }
         void setHealthPlayed(bool val)                  { this->healthPlayed = val; }
         void setRun(bool val)                           { this->run = val; }
         bool setRunPrevRound(bool val)                  { this->runPrevRound = val; }
+
+        void setPlayer(Player &val)                     { this->player = val; }
+        void setDeck(Deck &val)                         { this->deck = val; }
+        void setCursorPosition(CursorPosition val)      { this->cursorPosition = val; }
 
         void resetRound() {
         
