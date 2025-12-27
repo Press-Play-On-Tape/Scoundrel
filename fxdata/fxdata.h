@@ -6,8 +6,8 @@ using uint24_t = __uint24;
 
 // Initialize FX hardware using  FX::begin(FX_DATA_PAGE); in the setup() function.
 
-constexpr uint16_t FX_DATA_PAGE  = 0xfbe0;
-constexpr uint24_t FX_DATA_BYTES = 266150;
+constexpr uint16_t FX_DATA_PAGE  = 0xfbc1;
+constexpr uint24_t FX_DATA_BYTES = 274062;
 
 constexpr uint16_t FX_SAVE_PAGE  = 0xfff0;
 constexpr uint24_t FX_SAVE_BYTES = 2;
@@ -62,14 +62,16 @@ namespace Images
   constexpr uint24_t RestoreHealth = 0x033B5A;
   constexpr uint24_t ChooseFight = 0x034534;
   constexpr uint24_t Numbers_5x3_2D_MB = 0x035F3A;
-  constexpr uint24_t Numbers_5x3_2D_WB = 0x036770;
-  constexpr uint24_t Puff_00 = 0x036FA6;
-  constexpr uint24_t Puff_01 = 0x0387A8;
-  constexpr uint24_t Run = 0x039FAA;
-  constexpr uint24_t Sword = 0x03A078;
-  constexpr uint24_t YouLose = 0x03BE7A;
-  constexpr uint24_t YouWin = 0x03D07C;
-  constexpr uint24_t Hearts = 0x03E27E;
-  constexpr uint24_t RestartGame = 0x040680;
+  constexpr uint24_t Numbers_5x3_2D_WB = 0x036FA4;
+  constexpr uint24_t Puff_00 = 0x0377DA;
+  constexpr uint24_t Puff_01 = 0x038FDC;
+  constexpr uint24_t Run = 0x03A7DE;
+  constexpr uint24_t Sword = 0x03A8AC;
+  constexpr uint24_t YouLose = 0x03C6AE;
+  constexpr uint24_t YouWin = 0x03D8B0;
+  constexpr uint24_t Hearts = 0x03EAB2;
+  constexpr uint24_t RestartGame = 0x040EB4;
+  constexpr uint24_t YourScore = 0x0417DA;
+  constexpr uint24_t YourScore_Lower = 0x0426DC;
 }
 

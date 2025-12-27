@@ -136,3 +136,5 @@ convert_header(IMAGES + 'Extras/YouLose.png',                                   
 convert_header(IMAGES + 'Extras/YouWin.png',                                        BASE + 'Images.hpp', 'YouWin', 4)
 convert_header(IMAGES + 'Extras/Hearts.png',                                        BASE + 'Images.hpp', 'Hearts', 4, 32,32)
 convert_header(IMAGES + 'Extras/RestartGame.png',                                   BASE + 'Images.hpp', 'RestartGame', 4, 65, 24)
+convert_header(IMAGES + 'Extras/YourScore.png',                                     BASE + 'Images.hpp', 'YourScore', 4)
+convert_header(IMAGES + 'Extras/YourScore_Lower.png',                               BASE + 'Images.hpp', 'YourScore_Lower', 4, 82, 16)

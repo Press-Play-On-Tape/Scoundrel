@@ -132,6 +132,7 @@ enum class GameState : uint8_t {
         ChooseFight,
         YouWin,
         YouLose,
+        Score,
         RestartGame,
     Play_End,
     

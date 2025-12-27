@@ -9,7 +9,7 @@ void play_Init() {
     // #ifdef DEBUG_RAND
     a.initRandomSeed();
     uint16_t r = random(8000);
-    // r = 66;
+    // r = 7844;
     // DEBUG_PRINT("Rand ");
     // DEBUG_PRINTLN(r);
     randomSeed(r);
@@ -364,6 +364,12 @@ void play_Update() {
                             puff.init(PuffMode::Burn, cardIdx);
 
                         }
+                        else {
+
+                            gameState = GameState::Play;
+                            break;                        
+
+                        }
 
                     }
 
@@ -467,6 +473,17 @@ void play_Update() {
 
             case GameState::YouWin: 
             case GameState::YouLose:
+
+                if (justPressed & A_BUTTON) {
+                
+                    gameState = GameState::Score;
+
+                }   
+
+                break;   
+
+
+            case GameState::Score: 
 
                 if (justPressed & A_BUTTON) {
                 
@@ -607,6 +624,7 @@ void play_Update() {
                         {
                             Card card = game.player.getCard(puff.getIndex());
                             game.player.setWeapon(card);
+                            game.player.setPrevCard(game.player.getCard(puff.getIndex()));
                             game.player.getCard(puff.getIndex()).reset();
                             game.player.clearDefeated();
                         }
@@ -631,6 +649,9 @@ void play_Update() {
                             game.deck.addCard(card3);
                             game.player.getCard(3).reset();
 
+                            Card prevCard;
+                            game.player.setPrevCard(prevCard);
+
                         }
 
                         break;
@@ -640,7 +661,9 @@ void play_Update() {
                             Card card = game.player.getCard(puff.getIndex());
                             game.setHealthPlayed(true);
                             game.setHealthCount(static_cast<uint8_t>(card.getRank()));                            
+                            game.player.setPrevCard(game.player.getCard(puff.getIndex()));
                             game.player.getCard(puff.getIndex()).reset();
+
                         }
 
                         break;
@@ -648,6 +671,7 @@ void play_Update() {
                     case PuffMode::Burn:
                         {
                             Card card = game.player.getCard(puff.getIndex());
+                            game.player.setPrevCard(game.player.getCard(puff.getIndex()));
                             game.player.getCard(puff.getIndex()).reset();
                         }
                         
@@ -702,7 +726,11 @@ void play_Update() {
                             Card card = game.player.getCard(puff.getIndex());
 
                             game.setHealthCount(-static_cast<uint8_t>(card.getRank()));
-                            game.player.getCard(puff.getIndex()).reset();
+
+                            if (game.player.getHealth() > static_cast<uint8_t>(card.getRank())) {
+                                game.player.setPrevCard(game.player.getCard(puff.getIndex()));
+                                game.player.getCard(puff.getIndex()).reset();
+                            }
                             gameState = GameState::Play;
 
                             resetCursor();
@@ -721,8 +749,11 @@ void play_Update() {
                                 game.setHealthCount(-static_cast<uint8_t>(card.getRank()) + game.player.getWeaponValue());
                             }
 
-                            game.player.getCard(puff.getIndex()).reset();
-                            game.player.addDefeatCard(card);
+                            if (game.player.getHealth() > static_cast<uint8_t>(card.getRank())) {
+                                game.player.setPrevCard(game.player.getCard(puff.getIndex()));
+                                game.player.getCard(puff.getIndex()).reset();
+                                game.player.addDefeatCard(card);
+                            }
 
                             gameState = GameState::Play;
                             resetCursor();
@@ -972,6 +1003,67 @@ void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
             renderPlayerHand(currentPlane, false, false);
             SpritesU::drawPlusMaskFX(32, 20, Images::RestartGame, (menuCusror * 3) + currentPlane);
             
+            break;
+
+        case GameState::Score:
+            {
+
+                uint8_t count = 0;
+                int16_t score = 0;
+                
+                for (uint8_t i = 0; i < 4; i++) {
+
+                    if (game.player.getCard(i).getSuit() == Suit::Spades || game.player.getCard(i).getSuit() == Suit::Clubs) {
+                        count++;
+                        score = score - static_cast<uint8_t>(game.player.getCard(i).getRank());
+                    }
+
+                }            
+
+                for (uint8_t i = 0; i < game.deck.getCardsRemaining(); i++) {
+
+                    if (game.deck.getCard(i)->getSuit() == Suit::Spades || game.deck.getCard(i)->getSuit() == Suit::Clubs) {
+                        count++;
+                        score = score - static_cast<uint8_t>(game.deck.getCard(i)->getRank());
+                    }
+
+                }         
+
+                if (score == 0) {
+                
+                    score = game.player.getHealth();
+
+                    if (score == 20) {
+
+                        if (game.player.getPrevCard().getSuit() == Suit::Hearts) {
+                            score = score + static_cast<uint8_t>(game.player.getPrevCard().getRank());
+                        }
+
+                    }
+
+                }   
+
+                SpritesU::drawOverwriteFX(0, 0, Images::Fire, (3 * ((game.getFrameCount()/6) % 16)) + currentPlane);
+                SpritesU::drawPlusMaskFX(0, 0, Images::YourScore, currentPlane);
+
+                if (score < 0) {
+
+                    SpritesU::drawPlusMaskFX(24, 37, Images::YourScore_Lower, currentPlane);
+                    SpritesU::drawPlusMaskFX(97, 37, Images::Numbers_5x3_2D_MB, (count * 3) + currentPlane);
+                    SpritesU::drawPlusMaskFX(74, 45, Images::Numbers_5x3_2D_MB, ((-score / 10) * 3) + currentPlane);
+                    SpritesU::drawPlusMaskFX(78, 45, Images::Numbers_5x3_2D_MB, ((-score % 100) * 3) + currentPlane);
+
+                }
+                else {
+
+                    SpritesU::drawPlusMaskFX(24, 37, Images::YourScore_Lower, 3 + currentPlane);
+                    SpritesU::drawPlusMaskFX(97, 37, Images::Numbers_5x3_2D_MB, (count * 3) + currentPlane);
+                    SpritesU::drawPlusMaskFX(74, 45, Images::Numbers_5x3_2D_MB, (score * 3) + currentPlane);
+                
+                }
+
+            }
+
             break;
 
     }

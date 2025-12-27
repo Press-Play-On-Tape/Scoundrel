@@ -56,6 +56,14 @@ struct Deck {
 
         }
 
+        Card *getCard(uint8_t i) {
+
+            if (this->deckSize == 0) return nullptr;
+
+            return &this->deck[i];
+
+        }
+
         void addCard(Card &card) {
 
             if (this->deckSize >= 44) return;

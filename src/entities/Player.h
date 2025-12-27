@@ -15,6 +15,7 @@ struct Player {
         uint8_t defeatCardIdx;
 
         Card cards[4];
+        Card prevCard;
         Card defeatCards[10];
         Card weapon;
 
@@ -22,6 +23,7 @@ struct Player {
 
         uint8_t getHealth()                             { return this->health; }
         Card &getCard(uint8_t idx)                      { return this->cards[idx]; }
+        Card &getPrevCard()                             { return this->prevCard; }
         Card &getDefeatCard(uint8_t idx)                { return this->defeatCards[idx]; }
         Card &getWeapon()                               { return this->weapon; }
 
@@ -137,9 +139,10 @@ struct Player {
             
         }
 
-        void playCard(uint8_t idx, bool isHumanPlayer) {
+        void setPrevCard(Card &card) {
 
-            Card &card = this->cards[idx];
+            this->prevCard.setRank(card.getRank()); 
+            this->prevCard.setSuit(card.getSuit()); 
 
         }
 

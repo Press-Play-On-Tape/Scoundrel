@@ -99,9 +99,9 @@ void renderHUD(uint8_t currentPlane) {
 
     SpritesU::drawOverwriteFX(103, 0, Images::HUD, currentPlane);
 
-    SpritesU::drawOverwriteFX(112, 16, Images::Numbers_5x3_2D_MB, (game.deck.getCardsRemaining() * 3) + currentPlane);
-    SpritesU::drawOverwriteFX(112, 35, Images::Numbers_5x3_2D_MB, (game.player.getHealth() * 3) + currentPlane);
-    SpritesU::drawOverwriteFX(112, 54, Images::Numbers_5x3_2D_MB, (game.player.getWeaponValue() * 3) + currentPlane);
+    SpritesU::drawPlusMaskFX(112, 16, Images::Numbers_5x3_2D_MB, (game.deck.getCardsRemaining() * 3) + currentPlane);
+    SpritesU::drawPlusMaskFX(112, 35, Images::Numbers_5x3_2D_MB, (game.player.getHealth() * 3) + currentPlane);
+    SpritesU::drawPlusMaskFX(112, 54, Images::Numbers_5x3_2D_MB, (game.player.getWeaponValue() * 3) + currentPlane);
 
     if (game.deck.getCardsRemaining() > 0) {
         SpritesU::drawOverwriteFX(0, 8, Images::Hand_Full, currentPlane);
