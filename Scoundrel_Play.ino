@@ -950,8 +950,19 @@ void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
 
                     case 0:
 
-                        SpritesU::drawPlusMaskFX(23, 20, Images::ChooseFight, (menuCusror * 3) + currentPlane);
-                        SpritesU::drawOverwriteFX(50, 22, Images::Numbers_5x3_2D_WB, (static_cast<uint8_t>(card.getRank()) * 3) + currentPlane);
+                        if (game.getPlayer().getWeapon().getRank() == Rank::None ||game.getPlayer().getDefeatCard(0).getRank() != Rank::None && game.getPlayer().getDefeatCard(0).getRank() <= card.getRank()) {
+
+                            SpritesU::drawPlusMaskFX(23, 20, Images::ChooseFight, ((menuCusror + 3) * 3) + currentPlane);
+                            SpritesU::drawOverwriteFX(50, 22, Images::Numbers_5x3_2D_WB, (static_cast<uint8_t>(card.getRank()) * 3) + currentPlane);
+                        
+                        }
+                        else {
+
+                            SpritesU::drawPlusMaskFX(23, 20, Images::ChooseFight, (menuCusror * 3) + currentPlane);
+                            SpritesU::drawOverwriteFX(50, 22, Images::Numbers_5x3_2D_WB, (static_cast<uint8_t>(card.getRank()) * 3) + currentPlane);
+
+                        }
+
                         break;
 
                     case 1 ... 6:

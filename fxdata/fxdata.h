@@ -6,8 +6,8 @@ using uint24_t = __uint24;
 
 // Initialize FX hardware using  FX::begin(FX_DATA_PAGE); in the setup() function.
 
-constexpr uint16_t FX_DATA_PAGE  = 0xfb91;
-constexpr uint24_t FX_DATA_BYTES = 286352;
+constexpr uint16_t FX_DATA_PAGE  = 0xfb77;
+constexpr uint24_t FX_DATA_BYTES = 293012;
 
 constexpr uint16_t FX_SAVE_PAGE  = 0xfff0;
 constexpr uint24_t FX_SAVE_BYTES = 2;
@@ -61,18 +61,18 @@ namespace Images
   constexpr uint24_t BurnCard = 0x0333E4;
   constexpr uint24_t RestoreHealth = 0x033B5A;
   constexpr uint24_t ChooseFight = 0x034534;
-  constexpr uint24_t Numbers_5x3_2D_MB = 0x035F3A;
-  constexpr uint24_t Numbers_5x3_2D_WB = 0x036FA4;
-  constexpr uint24_t Puff_00 = 0x0377DA;
-  constexpr uint24_t Puff_01 = 0x038FDC;
-  constexpr uint24_t Run = 0x03A7DE;
-  constexpr uint24_t Sword = 0x03A8AC;
-  constexpr uint24_t YouLose = 0x03C6AE;
-  constexpr uint24_t YouWin = 0x03D8B0;
-  constexpr uint24_t Hearts = 0x03EAB2;
-  constexpr uint24_t RestartGame = 0x040EB4;
-  constexpr uint24_t YourScore = 0x0417DA;
-  constexpr uint24_t YourScore_Lower = 0x0426DC;
-  constexpr uint24_t Knuckles = 0x042E8E;
+  constexpr uint24_t Numbers_5x3_2D_MB = 0x03793E;
+  constexpr uint24_t Numbers_5x3_2D_WB = 0x0389A8;
+  constexpr uint24_t Puff_00 = 0x0391DE;
+  constexpr uint24_t Puff_01 = 0x03A9E0;
+  constexpr uint24_t Run = 0x03C1E2;
+  constexpr uint24_t Sword = 0x03C2B0;
+  constexpr uint24_t YouLose = 0x03E0B2;
+  constexpr uint24_t YouWin = 0x03F2B4;
+  constexpr uint24_t Hearts = 0x0404B6;
+  constexpr uint24_t RestartGame = 0x0428B8;
+  constexpr uint24_t YourScore = 0x0431DE;
+  constexpr uint24_t YourScore_Lower = 0x0440E0;
+  constexpr uint24_t Knuckles = 0x044892;
 }
 
