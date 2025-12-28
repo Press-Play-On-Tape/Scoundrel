@@ -80,4 +80,10 @@ struct Deck {
 
         }
 
+        void setCard(uint8_t i, Suit suit, Rank rank) {
+
+            this->deck[i].setRank(rank);
+            this->deck[i].setSuit(suit);
+
+        }
 };

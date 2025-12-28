@@ -6,8 +6,8 @@ using uint24_t = __uint24;
 
 // Initialize FX hardware using  FX::begin(FX_DATA_PAGE); in the setup() function.
 
-constexpr uint16_t FX_DATA_PAGE  = 0xfbc1;
-constexpr uint24_t FX_DATA_BYTES = 274062;
+constexpr uint16_t FX_DATA_PAGE  = 0xfb91;
+constexpr uint24_t FX_DATA_BYTES = 286352;
 
 constexpr uint16_t FX_SAVE_PAGE  = 0xfff0;
 constexpr uint24_t FX_SAVE_BYTES = 2;
@@ -73,5 +73,6 @@ namespace Images
   constexpr uint24_t RestartGame = 0x040EB4;
   constexpr uint24_t YourScore = 0x0417DA;
   constexpr uint24_t YourScore_Lower = 0x0426DC;
+  constexpr uint24_t Knuckles = 0x042E8E;
 }
 

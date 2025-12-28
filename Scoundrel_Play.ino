@@ -9,7 +9,7 @@ void play_Init() {
     // #ifdef DEBUG_RAND
     a.initRandomSeed();
     uint16_t r = random(8000);
-    // r = 7844;
+    // r = 5362;
     // DEBUG_PRINT("Rand ");
     // DEBUG_PRINTLN(r);
     randomSeed(r);
@@ -69,6 +69,12 @@ void play_Update() {
                 game.setRound(0);
 
                 // game.getDeck().setDeckSize(5);
+                // game.getDeck().setCard(43, Suit::Diamonds, Rank::Ten);
+                // game.getDeck().setCard(42, Suit::Clubs, Rank::King);
+                // game.getDeck().setCard(41, Suit::Clubs, Rank::Ten);
+                // game.getDeck().setCard(40, Suit::Spades, Rank::Ten);
+                // game.getDeck().setCard(39, Suit::Clubs, Rank::Four);
+                // game.getDeck().setCard(38, Suit::Clubs, Rank::Three);
 
                 break;
 
@@ -721,40 +727,17 @@ void play_Update() {
 
                 switch (puff.getPuffMode()) {
 
-                    case PuffMode::Fight_BareHand:
-                        {
-                            Card card = game.getPlayer().getCard(puff.getIndex());
-
-                            game.setHealthCount(-static_cast<uint8_t>(card.getRank()));
-
-                            if (game.getPlayer().getHealth() > static_cast<uint8_t>(card.getRank())) {
-                                game.getPlayer().setPrevCard(game.getPlayer().getCard(puff.getIndex()));
-                                game.getPlayer().getCard(puff.getIndex()).reset();
-                            }
-                            gameState = GameState::Play;
-
-                            resetCursor();
-                            puff.setCounter(0);
-
-                        }
-
-                        break;
-
                     case PuffMode::Fight_Weapon:
                         {
-                            
                             Card card = game.getPlayer().getCard(puff.getIndex());
 
                             if (static_cast<uint8_t>(card.getRank()) > game.getPlayer().getWeaponValue()) {
                                 game.setHealthCount(-static_cast<uint8_t>(card.getRank()) + game.getPlayer().getWeaponValue());
                             }
 
-                            if (game.getPlayer().getHealth() > static_cast<uint8_t>(card.getRank())) {
-                                game.getPlayer().setPrevCard(game.getPlayer().getCard(puff.getIndex()));
-                                game.getPlayer().getCard(puff.getIndex()).reset();
-                                game.getPlayer().addDefeatCard(card);
-                            }
-
+                            game.getPlayer().setPrevCard(game.getPlayer().getCard(puff.getIndex()));
+                            game.getPlayer().getCard(puff.getIndex()).reset();
+                            game.getPlayer().addDefeatCard(card);
                             gameState = GameState::Play;
                             resetCursor();
                             puff.setCounter(0);
@@ -784,6 +767,33 @@ void play_Update() {
                             resetCursor();
                             puff.setCounter(0);
                             gameState = GameState::Play;
+
+                        }
+
+                        break;
+
+                }
+
+                break;
+
+            case 14:
+
+                switch (puff.getPuffMode()) {
+
+                    case PuffMode::Fight_BareHand:
+                        {
+                            Card card = game.getPlayer().getCard(puff.getIndex());
+
+                            game.setHealthCount(-static_cast<uint8_t>(card.getRank()));
+
+                            if (game.getPlayer().getHealth() > static_cast<uint8_t>(card.getRank())) {
+                                game.getPlayer().setPrevCard(game.getPlayer().getCard(puff.getIndex()));
+                                game.getPlayer().getCard(puff.getIndex()).reset();
+                            }
+                            gameState = GameState::Play;
+
+                            resetCursor();
+                            puff.setCounter(0);
 
                         }
 
@@ -944,20 +954,74 @@ void play(ArduboyGBase_Config<ABG_Mode::L4_Triplane> &a) {
                         SpritesU::drawOverwriteFX(50, 22, Images::Numbers_5x3_2D_WB, (static_cast<uint8_t>(card.getRank()) * 3) + currentPlane);
                         break;
 
-                    case 1 ... 8:
+                    case 1 ... 6:
 
-                        if (puff.getPuffMode() == PuffMode::Fight_Weapon) {
-                            SpritesU::drawPlusMaskFX(16 + 18 + 36, 34, Images::Puff_01, ((puff.getCounter()  - 1) * 3) + currentPlane);
+                        switch (puff.getPuffMode()) {
+
+                            case PuffMode::Fight_BareHand:
+
+                                SpritesU::drawPlusMaskFX(17 + (puff.getIndex() * 18), -1, Images::Knuckles, ((puff.getCounter()  - 1) * 3) + currentPlane);
+                                break;
+
+                            case PuffMode::Fight_Weapon:
+
+                                SpritesU::drawPlusMaskFX(16 + 18 + 36, 34, Images::Puff_01, ((puff.getCounter()  - 1) * 3) + currentPlane);
+                                SpritesU::drawPlusMaskFX(17 + (puff.getIndex() * 18), 4, Images::Sword, ((puff.getCounter()  - 1) * 3) + currentPlane);
+                                break;
+
                         }
 
-                        SpritesU::drawPlusMaskFX(17 + (puff.getIndex() * 18), 4, Images::Sword, ((puff.getCounter()  - 1) * 3) + currentPlane);
-    
+                        break;
+
+                    case 7 ... 8:
+
+                        switch (puff.getPuffMode()) {
+
+                            case PuffMode::Fight_BareHand:
+
+                                SpritesU::drawPlusMaskFX(17 + (puff.getIndex() * 18), -1, Images::Knuckles, ((puff.getCounter()  - 1) * 3) + currentPlane);
+                                break;
+
+                            case PuffMode::Fight_Weapon:
+
+                                SpritesU::drawPlusMaskFX(16 + 18 + 36, 34, Images::Puff_01, ((puff.getCounter()  - 1) * 3) + currentPlane);
+                                SpritesU::drawPlusMaskFX(17 + (puff.getIndex() * 18), 4, Images::Sword, ((puff.getCounter()  - 1) * 3) + currentPlane);
+                                break;
+
+                        }
+
                         break;
 
                     case 9:
 
-                        SpritesU::drawPlusMaskFX(17 + (puff.getIndex() * 18), 4, Images::Sword, ((puff.getCounter()  - 1) * 3) + currentPlane);
+                        switch (puff.getPuffMode()) {
+
+                            case PuffMode::Fight_BareHand:
+
+                                SpritesU::drawPlusMaskFX(17 + (puff.getIndex() * 18), -1, Images::Knuckles, ((puff.getCounter()  - 1) * 3) + currentPlane);
+                                break;
+
+                            case PuffMode::Fight_Weapon:
+
+                                SpritesU::drawPlusMaskFX(17 + (puff.getIndex() * 18), 4, Images::Sword, ((puff.getCounter()  - 1) * 3) + currentPlane);
+                                break;
+
+                        }
     
+                        break;
+
+
+                    case 10 ... 14:
+
+                        switch (puff.getPuffMode()) {
+
+                            case PuffMode::Fight_BareHand:
+
+                                SpritesU::drawPlusMaskFX(17 + (puff.getIndex() * 18), -1, Images::Knuckles, ((puff.getCounter()  - 1) * 3) + currentPlane);
+                                break;
+
+                        }
+
                         break;
 
                 }

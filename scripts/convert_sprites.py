@@ -138,3 +138,4 @@ convert_header(IMAGES + 'Extras/Hearts.png',                                    
 convert_header(IMAGES + 'Extras/RestartGame.png',                                   BASE + 'Images.hpp', 'RestartGame', 4, 65, 24)
 convert_header(IMAGES + 'Extras/YourScore.png',                                     BASE + 'Images.hpp', 'YourScore', 4)
 convert_header(IMAGES + 'Extras/YourScore_Lower.png',                               BASE + 'Images.hpp', 'YourScore_Lower', 4, 82, 16)
+convert_header(IMAGES + 'Extras/Knuckles.png',                                      BASE + 'Images.hpp', 'Knuckles', 4, 32, 32)
